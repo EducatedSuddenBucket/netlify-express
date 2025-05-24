@@ -554,6 +554,6 @@ app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
 
-app.use(`/api/`, router);
+app.use(`/`, router);
 
 module.exports.handler = serverless(app);
