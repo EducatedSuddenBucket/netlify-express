@@ -8,7 +8,7 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-
+const router = express.Router();
 app.use(express.json());
 
 // Java Edition Pinger
@@ -370,7 +370,7 @@ async function resolveAndConnect(host, port, isJava = true) {
   }
 }
 
-app.get('/api/png/:serverip', async (req, res) => {
+router.get('/api/png/:serverip', async (req, res) => {
   const serverip = req.params.serverip;
   let [serverHost, serverPort] = serverip.split(':');
   serverPort = serverPort ? parseInt(serverPort) : 25565;
@@ -427,7 +427,7 @@ app.get('/api/png/:serverip', async (req, res) => {
   }
 });
 
-app.get('/api/status/:serverAddress', async (req, res) => {
+router.get('/api/status/:serverAddress', async (req, res) => {
   const [serverHost, serverPort] = req.params.serverAddress.split(':');
   const port = serverPort ? parseInt(serverPort, 10) : 25565;
 
@@ -491,7 +491,7 @@ app.get('/api/status/:serverAddress', async (req, res) => {
   }
 });
 
-app.get('/api/status/bedrock/:serverAddress', async (req, res) => {
+router.get('/api/status/bedrock/:serverAddress', async (req, res) => {
   const [serverHost, serverPort] = req.params.serverAddress.split(':');
   const port = serverPort ? parseInt(serverPort, 10) : 19132;
 
