@@ -8,10 +8,8 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-const router = express.Router();
 app.use(express.json());
 
-// Java Edition Pinger
 function createVarInt(value) {
   const bytes = [];
   while (true) {
@@ -370,7 +368,7 @@ async function resolveAndConnect(host, port, isJava = true) {
   }
 }
 
-router.get('/api/png/:serverip', async (req, res) => {
+app.get('/api/png/:serverip', async (req, res) => {
   const serverip = req.params.serverip;
   let [serverHost, serverPort] = serverip.split(':');
   serverPort = serverPort ? parseInt(serverPort) : 25565;
@@ -427,7 +425,7 @@ router.get('/api/png/:serverip', async (req, res) => {
   }
 });
 
-router.get('/api/status/:serverAddress', async (req, res) => {
+app.get('/api/status/:serverAddress', async (req, res) => {
   const [serverHost, serverPort] = req.params.serverAddress.split(':');
   const port = serverPort ? parseInt(serverPort, 10) : 25565;
 
@@ -491,7 +489,7 @@ router.get('/api/status/:serverAddress', async (req, res) => {
   }
 });
 
-router.get('/api/status/bedrock/:serverAddress', async (req, res) => {
+app.get('/api/status/bedrock/:serverAddress', async (req, res) => {
   const [serverHost, serverPort] = req.params.serverAddress.split(':');
   const port = serverPort ? parseInt(serverPort, 10) : 19132;
 
@@ -547,13 +545,6 @@ router.get('/api/status/bedrock/:serverAddress', async (req, res) => {
     res.json(errorResponse);
   }
 });
-
-
-
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
-});
-
-app.use(`/`, router);
+app.use(`/`);
 
 module.exports.handler = serverless(app);
