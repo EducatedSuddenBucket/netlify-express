@@ -545,6 +545,6 @@ app.get('/api/status/bedrock/:serverAddress', async (req, res) => {
     res.json(errorResponse);
   }
 });
-app.use(`/`);
+
 
 module.exports.handler = serverless(app);
