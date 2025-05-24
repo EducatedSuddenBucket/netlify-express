@@ -3,14 +3,14 @@ const express = require('express');
 const net = require('net');
 const dns = require('dns');
 const dgram = require('dgram');
-const serveStatusPage = require('./statusPageTemplate');
+
 const app = express();
-const cors = require('cors');
+
 const port = process.env.PORT || 3000;
 
-app.use(express.static('public'));
+
 app.use(express.json());
-app.use(cors());
+
 // Java Edition Pinger
 function createVarInt(value) {
   const bytes = [];
@@ -548,23 +548,7 @@ app.get('/api/status/bedrock/:serverAddress', async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
 
-app.get('/:serverIp', (req, res) => {
-  const serverIp = req.params.serverIp;
-  serveStatusPage(res, serverIp, 'java');
-});
-
-app.get('/bedrock/:serverIp', (req, res) => {
-  const serverIp = req.params.serverIp;
-  serveStatusPage(res, serverIp, 'bedrock');
-});
-
-app.get('/api/docs', (req, res) => {
-  res.sendFile(__dirname + '/public/api-docs.html');
-});
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
